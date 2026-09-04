@@ -3,157 +3,267 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Book / Inquire | Moorthy Kalai Arangam</title>
+  <title>Contact & Enquiries | Moorthy Kalai Arangam</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap">
 </head>
 <body>
 
+  <!-- Sticky Header -->
   <header>
     <div class="container nav-bar">
       <div class="logo">MOORTHY <span>KALAI ARANGAM</span></div>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
-        <li><a href="amenities.html">Facilities</a></li>
-        <li><a href="contact.html" class="active">Check Availability</a></li>
+        <li><a href="wedding-hall.html">Wedding Hall</a></li>
+        <li><a href="mini-hall.html">Mini Hall</a></li>
+        <li><a href="murali-inn.html">Murali Inn</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
       </ul>
     </div>
   </header>
 
   <section class="section container">
-    <div class="section-title">
-      <h2>Check Date Availability & Booking</h2>
-      <p>Submit your event requirements to receive an instant callback or send directly via WhatsApp.</p>
+    <!-- Top Header -->
+    <div class="contact-page-header">
+      <span class="detail-eyebrow">BOOKINGS & QUESTIONS</span>
+      <h1>Enquire by WhatsApp, phone, or email</h1>
+      <p>Use the form and we will open WhatsApp and an email draft with your details.</p>
     </div>
 
-    <div class="form-container">
-      <form id="bookingForm" onsubmit="sendViaEmail(event)">
-        <div class="form-group">
-          <label for="custName">Full Name *</label>
-          <input type="text" id="custName" required placeholder="e.g. S. Ramanathan">
+    <!-- Main 2-Column Contact Container -->
+    <div class="contact-split-wrapper">
+      
+      <!-- Left: Form Card -->
+      <div class="contact-form-card">
+        <form id="enquiryForm" onsubmit="handleCombinedDispatch(event)">
+          <div class="form-group">
+            <label for="name">Name *</label>
+            <input type="text" id="name" required placeholder="">
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone *</label>
+            <input type="tel" id="phone" required placeholder="">
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="">
+          </div>
+
+          <div class="form-group">
+            <label for="address">Address *</label>
+            <input type="text" id="address" required placeholder="City / Street address">
+          </div>
+
+          <div class="form-group">
+            <label for="bookingChoice">I want to book *</label>
+            <select id="bookingChoice" required onchange="toggleRoomOptions()">
+              <option value="" disabled selected>Select</option>
+              <option value="Wedding Hall">Wedding Hall</option>
+              <option value="Mini Hall">Mini Hall</option>
+              <option value="Rooms in Murali Inn">Rooms in Murali Inn</option>
+            </select>
+          </div>
+
+          <!-- Dynamic Room Type Checkboxes (Only shown when 'Rooms in Murali Inn' is chosen) -->
+          <div class="form-group room-types-box" id="roomOptionsBlock" style="display: none;">
+            <label style="margin-bottom: 8px;">Select Room Type(s) Required:</label>
+            <div class="checkbox-grid">
+              <label class="check-item"><input type="checkbox" name="roomType" value="10 Bed Room"> 10 Bed</label>
+              <label class="check-item"><input type="checkbox" name="roomType" value="8 Bed Room"> 8 Bed</label>
+              <label class="check-item"><input type="checkbox" name="roomType" value="6 Bed Room"> 6 Bed</label>
+              <label class="check-item"><input type="checkbox" name="roomType" value="3 Bed Room"> 3 Bed</label>
+            </div>
+          </div>
+
+          <!-- Date Range: From Date & To Date -->
+          <div class="date-row-group">
+            <div class="form-group">
+              <label for="fromDate">From date *</label>
+              <input type="date" id="fromDate" required>
+            </div>
+            <div class="form-group">
+              <label for="toDate">To date *</label>
+              <input type="date" id="toDate" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" rows="4" placeholder="Guest count, special arrangements, or queries"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-dark-full">Send via WhatsApp & email</button>
+          <p class="form-disclaimer">Your device will open WhatsApp and your mail app. No account is required on this site.</p>
+        </form>
+      </div>
+
+      <!-- Right: "Talk to us" Sidebar with Google Maps -->
+      <div class="talk-to-us-card">
+        <h2>Talk to us</h2>
+
+        <div class="talk-block">
+          <span class="talk-label">Phone</span>
+          <a href="tel:+916381752600" class="talk-val link-gold">+91 63817 52600</a>
         </div>
 
-        <div class="form-group">
-          <label for="custPhone">Phone Number *</label>
-          <input type="tel" id="custPhone" required placeholder="+91 98765 43210">
+        <div class="talk-block">
+          <span class="talk-label">WhatsApp</span>
+          <a href="https://wa.me/916381752600" target="_blank" class="talk-val link-gold">Chat on WhatsApp (+91 63817 52600)</a>
         </div>
 
-        <div class="form-group">
-          <label for="bookingType">Required Facility *</label>
-          <select id="bookingType" required>
-            <option value="Wedding Hall (Main)">Wedding Hall (Central AC, 1200 Capacity)</option>
-            <option value="Mini Hall">Mini Hall</option>
-            <option value="Guest Rooms Only">22 Guest Rooms Only</option>
-            <option value="All Facilities Combined">Combined (Halls + 22 Rooms)</option>
-          </select>
+        <div class="talk-block">
+          <span class="talk-label">Halls Email</span>
+          <a href="mailto:moorthikalaiarangam@gmail.com" class="talk-val link-gold">moorthikalaiarangam@gmail.com</a>
         </div>
 
-        <div class="form-group">
-          <label for="eventDate">Event Date *</label>
-          <input type="date" id="eventDate" required>
+        <div class="talk-block">
+          <span class="talk-label">Rooms Only Email</span>
+          <a href="mailto:muraliinn@gmail.com" class="talk-val link-gold">muraliinn@gmail.com</a>
         </div>
 
-        <div class="form-group">
-          <label for="eventDetails">Additional Requirements (Cooking/Guest Count)</label>
-          <textarea id="eventDetails" rows="4" placeholder="Let us know approximate guest count or specific arrangements..."></textarea>
+        <div class="talk-block" style="border-bottom: none; margin-bottom: 15px;">
+          <span class="talk-label">Address</span>
+          <p class="talk-val-plain">16, Sarangapani Street, Valayapettai Agraharam, Kumbakonam — 612001</p>
         </div>
 
-        <div class="form-buttons">
-          <button type="submit" class="btn btn-primary" style="flex: 1;">Send via Email</button>
-          <button type="button" onclick="sendViaWhatsApp()" class="btn btn-whatsapp" style="flex: 1;">Send via WhatsApp</button>
+        <!-- Embedded Google Map -->
+        <div class="map-embed-box">
+          <iframe 
+            src="https://maps.google.com/maps?q=Moorthy+Kalai+Arangam+Kumbakonam&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+            width="100%" 
+            height="220" 
+            style="border:0; display: block;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
         </div>
-      </form>
+      </div>
+
     </div>
   </section>
 
+  <!-- Footer -->
   <footer>
-    <div class="container footer-bottom">
-      &copy; 2026 Moorthy Kalai Arangam, Kumbakonam.
+    <div class="container footer-grid">
+      <div>
+        <h3>Moorthy Kalai Arangam</h3>
+        <p>16, Sarangapani Street, Valayapettai Agraharam, Kumbakonam - 612001, Tamil Nadu.</p>
+      </div>
+      <div>
+        <h4>Direct Contact</h4>
+        <p style="margin-bottom: 6px;"><strong>Phone:</strong> <a href="tel:+916381752600" style="color: inherit;">+91 63817 52600</a></p>
+        <p style="margin-bottom: 6px;"><strong>WhatsApp:</strong> <a href="https://wa.me/916381752600" target="_blank" style="color: inherit;">+91 63817 52600</a></p>
+        <p style="margin-bottom: 6px;"><strong>Halls:</strong> <a href="mailto:moorthikalaiarangam@gmail.com" style="color: inherit;">moorthikalaiarangam@gmail.com</a></p>
+        <p style="margin-bottom: 6px;"><strong>Rooms Only:</strong> <a href="mailto:muraliinn@gmail.com" style="color: inherit;">muraliinn@gmail.com</a></p>
+      </div>
+      <div>
+        <h4>Highlights</h4>
+        <p>Wheelchair Accessible • Full Generator Backup • Multi-Level CCTV Monitoring</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Moorthy Kalai Arangam. All Rights Reserved.
     </div>
   </footer>
 
   <script>
-    // 1. Prefill facility selection from URL parameter (e.g. contact.html?type=mini)
+    // Show/hide room options based on dropdown choice
+    function toggleRoomOptions() {
+      const choice = document.getElementById('bookingChoice').value;
+      const roomBlock = document.getElementById('roomOptionsBlock');
+      if (choice === 'Rooms in Murali Inn') {
+        roomBlock.style.display = 'block';
+      } else {
+        roomBlock.style.display = 'none';
+        // uncheck boxes if hidden
+        document.querySelectorAll('input[name="roomType"]').forEach(cb => cb.checked = false);
+      }
+    }
+
+    // Prefill dropdown if visiting from another page (?type=rooms, etc.)
     window.addEventListener('DOMContentLoaded', () => {
       const params = new URLSearchParams(window.location.search);
       const type = params.get('type');
-      const dropdown = document.getElementById('bookingType');
-
-      if (type === 'wedding') dropdown.value = 'Wedding Hall (Main)';
-      if (type === 'mini') dropdown.value = 'Mini Hall';
-      if (type === 'rooms') dropdown.value = 'Rooms Only';
+      const select = document.getElementById('bookingChoice');
+      if (type === 'wedding') select.value = 'Wedding Hall';
+      if (type === 'mini') select.value = 'Mini Hall';
+      if (type === 'rooms') select.value = 'Rooms in Murali Inn';
+      toggleRoomOptions();
     });
 
-    // 2. Contact Routing Endpoints
-    const HALL_PHONE = "916381752600";         // WhatsApp destination number
-    const EMAIL_MANDAPAM = "moorthykalaiarangam@gmail.com";   // Destination for Wedding & Mini Hall
-    const EMAIL_ROOMS = "muraliinn@gmail.com";       // Destination for Rooms Only
+    const WHATSAPP_NUMBER = "916381752600";
+    const EMAIL_MANDAPAM = "moorthikalaiarangam@gmail.com";
+    const EMAIL_ROOMS = "muraliinn@gmail.com";
 
-    // 3. Form Message Compiler
-    function compileMessage() {
-      const name = document.getElementById('custName').value.trim();
-      const phone = document.getElementById('custPhone').value.trim();
-      const facility = document.getElementById('bookingType').value;
-      const date = document.getElementById('eventDate').value;
-      const details = document.getElementById('eventDetails').value.trim() || 'None provided';
-
-      return `New Booking Enquiry - Moorthy Kalai Arangam\n` +
-             `------------------------------------\n` +
-             `Name: ${name}\n` +
-             `Phone: ${phone}\n` +
-             `Facility: ${facility}\n` +
-             `Event Date: ${date}\n` +
-             `Details / Requests: ${details}`;
-    }
-
-    // 4. Form Field Validation Helper
-    function validateInputs() {
-      const name = document.getElementById('custName').value.trim();
-      const phone = document.getElementById('custPhone').value.trim();
-      const date = document.getElementById('eventDate').value;
-
-      if (!name) {
-        alert("Please enter your full name.");
-        document.getElementById('custName').focus();
-        return false;
-      }
-      if (!phone) {
-        alert("Please enter your phone number.");
-        document.getElementById('custPhone').focus();
-        return false;
-      }
-      if (!date) {
-        alert("Please select an event date.");
-        document.getElementById('eventDate').focus();
-        return false;
-      }
-      return true;
-    }
-
-    // 5. Send via WhatsApp
-    function sendViaWhatsApp() {
-      if (!validateInputs()) return;
-
-      const message = compileMessage();
-      const encodedMsg = encodeURIComponent(message);
-      const whatsappUrl = `https://wa.me/${HALL_PHONE}?text=${encodedMsg}`;
-      
-      window.open(whatsappUrl, '_blank');
-    }
-
-    // 6. Send via Email (Auto-routes based on chosen service)
-    function sendViaEmail(e) {
+    function handleCombinedDispatch(e) {
       e.preventDefault();
-      if (!validateInputs()) return;
 
-      const facility = document.getElementById('bookingType').value;
-      const targetEmail = (facility === "Guest Rooms Only") ? EMAIL_ROOMS : EMAIL_MANDAPAM;
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const custEmail = document.getElementById('email').value.trim() || 'Not provided';
+      const address = document.getElementById('address').value.trim();
+      const choice = document.getElementById('bookingChoice').value;
+      const fromDate = document.getElementById('fromDate').value;
+      const toDate = document.getElementById('toDate').value;
+      const message = document.getElementById('message').value.trim() || 'No additional notes';
+
+      // Gather room types if Murali Inn is chosen
+      let selectedRooms = [];
+      if (choice === 'Rooms in Murali Inn') {
+        document.querySelectorAll('input[name="roomType"]:checked').forEach(cb => {
+          selectedRooms.push(cb.value);
+        });
+      }
+      const roomStr = selectedRooms.length > 0 ? selectedRooms.join(', ') : 'Not specified';
+
+      // Determine target recipient email
+      const targetEmail = (choice === "Rooms in Murali Inn") ? EMAIL_ROOMS : EMAIL_MANDAPAM;
+
+      // Format WhatsApp Message
+      let waText = `*New Booking Enquiry - Moorthy Kalai Arangam*\n\n` +
+                   `*Name:* ${name}\n` +
+                   `*Phone:* ${phone}\n` +
+                   `*Email:* ${custEmail}\n` +
+                   `*Address:* ${address}\n` +
+                   `*Facility:* ${choice}\n`;
       
-      const subject = encodeURIComponent(`Booking Enquiry [${facility}] - Moorthy Kalai Arangam`);
-      const body = encodeURIComponent(compileMessage());
-      
-      window.location.href = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
+      if (choice === 'Rooms in Murali Inn') {
+        waText += `*Room Types:* ${roomStr}\n`;
+      }
+
+      waText += `*Dates:* ${fromDate} to ${toDate}\n` +
+                `*Message:* ${message}`;
+
+      // Format Email Content
+      const emailSubject = encodeURIComponent(`Booking Enquiry: ${choice} - ${name}`);
+      let emailBodyText = `Name: ${name}\n` +
+                          `Phone: ${phone}\n` +
+                          `Customer Email: ${custEmail}\n` +
+                          `Address: ${address}\n` +
+                          `Selected Facility: ${choice}\n`;
+
+      if (choice === 'Rooms in Murali Inn') {
+        emailBodyText += `Requested Room Types: ${roomStr}\n`;
+      }
+
+      emailBodyText += `From Date: ${fromDate}\n` +
+                       `To Date: ${toDate}\n\n` +
+                       `Message / Requirements:\n${message}`;
+
+      const emailBody = encodeURIComponent(emailBodyText);
+
+      // Trigger WhatsApp
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waText)}`, '_blank');
+
+      // Trigger default mail draft
+      setTimeout(() => {
+        window.location.href = `mailto:${targetEmail}?subject=${emailSubject}&body=${emailBody}`;
+      }, 400);
     }
   </script>
 </body>

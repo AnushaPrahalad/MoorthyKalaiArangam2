@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Hall | Moorthy Kalai Arangam</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap">
+</head>
+<body>
+
+  <header>
+    <div class="container nav-bar">
+      <div class="logo">MOORTHY <span>KALAI ARANGAM</span></div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="wedding-hall.html" class="active">Wedding Hall</a></li>
+        <li><a href="mini-hall.html">Mini Hall</a></li>
+        <li><a href="murali-inn.html">Murali Inn</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="section container">
+    <!-- Header with Eyebrow, Title, Description, and Pill Button -->
+    <div class="detail-header">
+      <span class="detail-eyebrow">Book The Main Hall</span>
+      <h1>Wedding hall</h1>
+      <p>A central air-conditioned hall for large weddings and receptions, with dining, parking, family rooms, and backup power on site.</p>
+      <a href="contact.html?type=wedding" class="btn btn-dark">Check availability</a>
+    </div>
+
+    <!-- Carousel Banner -->
+    <div class="carousel-banner" id="wedding-carousel">
+      <div class="carousel-slide active">
+        <div class="carousel-banner-placeholder">
+          <span class="carousel-badge-label">WEDDING HALL PHOTO (STAGE VIEW)</span>
+        </div>
+      </div>
+      <div class="carousel-slide">
+        <div class="carousel-banner-placeholder">
+          <span class="carousel-badge-label">WEDDING HALL PHOTO (1,200 SEATING OVERVIEW)</span>
+        </div>
+      </div>
+      <div class="carousel-slide">
+        <div class="carousel-banner-placeholder">
+          <span class="carousel-badge-label">WEDDING HALL PHOTO (VIP 40-SOFA ARRANGEMENT)</span>
+        </div>
+      </div>
+      <button class="banner-nav-btn prev" onclick="cycleSlide('wedding-carousel', -1)">&#10094;</button>
+      <button class="banner-nav-btn next" onclick="cycleSlide('wedding-carousel', 1)">&#10095;</button>
+    </div>
+
+    <!-- 4-Box Key Metrics Row -->
+    <div class="metric-row">
+      <div class="metric-card">
+        <h3>1,200</h3>
+        <p>Seating</p>
+      </div>
+      <div class="metric-card">
+        <h3>+1,000</h3>
+        <p>Floating capacity</p>
+      </div>
+      <div class="metric-card">
+        <h3>450</h3>
+        <p>Dining</p>
+      </div>
+      <div class="metric-card">
+        <h3>40</h3>
+        <p>Sofas</p>
+      </div>
+    </div>
+
+    <!-- 2-Column Specification Cards -->
+    <div class="spec-row">
+      <!-- Left Card: Hall & Dining -->
+      <div class="spec-card">
+        <h3>Hall & dining</h3>
+        <ul class="spec-list">
+          <li>Centralised AC hall</li>
+          <li>In-built music system</li>
+          <li>Automatic fragrance dispenser</li>
+          <li>2 LED screens in the hall</li>
+          <li>2 LED screens in the dining hall</li>
+          <li>Lift</li>
+          <li>Commercial cooking utensils available</li>
+          <li>Traditional Pooja utensils available</li>
+        </ul>
+      </div>
+
+      <!-- Right Card: Family Rooms & Parking/Safety -->
+      <div class="spec-card">
+        <h3>Family rooms with the hall</h3>
+        <ul class="spec-list">
+          <li>Bride: 2 rooms (2-bed and 4-bed)</li>
+          <li>Bridegroom: 2 rooms (2-bed and 4-bed)</li>
+          <li>Dedicated AC rooms accommodating 50 cooks/crew</li>
+        </ul>
+
+        <h3 style="margin-top: 25px;">Parking & safety</h3>
+        <ul class="spec-list">
+          <li>250 bike parking</li>
+          <li>100 car parking</li>
+          <li>Complete power backup</li>
+          <li>CCTV</li>
+          <li>24 &times; 7 security</li>
+          <li>Water tank</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <h3>Moorthy Kalai Arangam</h3>
+        <p>16, Sarangapani Street, Valayapettai Agraharam, Kumbakonam - 612001, Tamil Nadu.</p>
+      </div>
+      <div>
+        <h4>Direct Contact</h4>
+        <p style="margin-bottom: 6px;"><strong>Phone:</strong> <a href="tel:+916381700000" style="color: inherit;">+91 63817 00000</a></p>
+        <p style="margin-bottom: 6px;"><strong>WhatsApp:</strong> <a href="https://wa.me/918565230000" target="_blank" style="color: inherit;">+91 85652 30000</a></p>
+        <p style="margin-bottom: 6px;"><strong>Mandapam:</strong> <a href="mailto:xxxx@gmail.com" style="color: inherit;">xxxx@gmail.com</a></p>
+        <p style="margin-bottom: 6px;"><strong>Rooms Only:</strong> <a href="mailto:yyy@gmail.com" style="color: inherit;">yyy@gmail.com</a></p>
+      </div>
+      <div>
+        <h4>Highlights</h4>
+        <p>Wheelchair Accessible • Full Generator Backup • Multi-Level CCTV Monitoring</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Moorthy Kalai Arangam. All Rights Reserved.
+    </div>
+  </footer>
+
+  <script>
+    function cycleSlide(id, step) {
+      const container = document.getElementById(id);
+      const slides = container.querySelectorAll('.carousel-slide');
+      let activeIndex = 0;
+      slides.forEach((slide, i) => {
+        if (slide.classList.contains('active')) activeIndex = i;
+      });
+      slides[activeIndex].classList.remove('active');
+      const nextIndex = (activeIndex + step + slides.length) % slides.length;
+      slides[nextIndex].classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
