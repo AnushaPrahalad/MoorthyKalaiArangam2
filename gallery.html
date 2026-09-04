@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photo Gallery | Moorthy Kalai Arangam</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap">
+</head>
+<body>
+
+  <header>
+    <div class="container nav-bar">
+      <div class="logo">MOORTHY <span>KALAI ARANGAM</span></div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="amenities.html">Facilities</a></li>
+        <li><a href="gallery.html" class="active">Gallery</a></li>
+        <li><a href="contact.html">Check Availability</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="section container">
+    <div class="section-title">
+      <h2>Photo Gallery</h2>
+      <p>Take a virtual walkthrough of our wedding halls, stage areas, and guest accommodations.</p>
+    </div>
+
+    <!-- Carousel 1: Grand Kalyana Mandapam -->
+    <div class="gallery-block">
+      <div class="gallery-header">
+        <h3>1. Grand Kalyana Mandapam (Main Hall)</h3>
+        <p>Stage, seating arrangements, 40 VIP sofas, and centralised AC hall view</p>
+      </div>
+      <div class="carousel-container" id="carousel-main">
+        <div class="carousel-track">
+          <div class="carousel-slide active">
+            <div class="gallery-placeholder">
+              <span class="placeholder-icon">📷</span>
+              <span class="placeholder-text">[ Main Hall: Grand Stage Decoration & Setup ]</span>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="gallery-placeholder">
+              <span class="placeholder-icon">📷</span>
+              <span class="placeholder-text">[ Main Hall: 1200+ Guest Seating Overview ]</span>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="gallery-placeholder">
+              <span class="placeholder-icon">📷</span>
+              <span class="placeholder-text">[ Main Hall: VIP 40-Sofa Seating Row & Stage Front ]</span>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="gallery-placeholder">
+              <span class="placeholder-icon">📷</span>
+              <span class="placeholder-text">[ Main Hall: Entrance Archway & LED Relay Displays ]</span>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-btn prev" onclick="moveSlide('carousel-main', -1)">&#10094;</button>
+        <button class="carousel-btn next" onclick="moveSlide('carousel-main', 1)">&#10095;</button>
+        <div class="carousel-counter"><span class="current">1</span> / <span class="total">4</span></div>
+      </div>
+    </div>
+
+    <!-- Carousel 2: Mini Celebration Hall -->
+    <div class="gallery-block">
+      <div class="gallery-header">
+        <h3>2. Mini Celebration Hall</h3>
+        <p>Curated space for betrothals, Upanayanam, Seemantham, and corporate meets</p>
+      </div>
+      <div class="carousel-container" id="carousel-mini">
+        <div class="carousel-track">
+          <div class="carousel-slide active">
+            <div class="gallery-placeholder">
+              <span class="placeholder-icon">📷</span>
+              <span class="placeholder-text">[ Mini Hall: Intimate Stage & Backdrop Setup ]</span>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="gallery-placeholder">
+              <span class="placeholder-icon">📷</span>
+              <span class="placeholder-text">[ Mini Hall: Banquet Seating Arrangement ]</span>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="gallery-placeholder">
+              <span class="placeholder-icon">📷</span>
+              <span class="placeholder-text">[ Mini Hall: Air-Conditioning & Lighting Setup ]</span>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-btn prev" onclick="moveSlide('carousel-mini', -1)">&#10094;</button>
+        <button class="carousel-btn next" onclick="moveSlide('carousel-mini', 1)">&#10095;</button>
+        <div class="carousel-counter"><span class="current">1</span> / <span class="total">3</span></div>
+      </div>
+    </div>
+
+    <!-- Carousel 3: Rooms & Accommodation -->
+    <div class="gallery-block">
+      <div class="gallery-header">
+        <h3>3. Guest Rooms & Bridal Suites</h3>
+        <p>22 AC guest rooms with attached baths, water heaters, and dedicated bridal suites</p>
+      </div>
+      <div class="carousel-container" id="carousel-rooms">
+        <div class="carousel-track">
+          <div class="carousel-slide active">
+            <div class="gallery-placeholder">
+              <span class="placeholder-icon">📷</span>
+              <span class="placeholder-text">[ Bridal Suite: Premium Dressing Room with Mirror Setup ]</span>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="gallery-placeholder">
+              <span class="placeholder-icon">📷</span>
+              <span class="placeholder-text">[ Groom's Suite: Spacious Air-Conditioned Room ]</span>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="gallery-placeholder">
+              <span class="placeholder-icon">📷</span>
+              <span class="placeholder-text">[ Standard Guest AC Room: Bedding & Amenities ]</span>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="gallery-placeholder">
+              <span class="placeholder-icon">📷</span>
+              <span class="placeholder-text">[ Attached Bathroom: Clean Fixtures with Water Heater ]</span>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-btn prev" onclick="moveSlide('carousel-rooms', -1)">&#10094;</button>
+        <button class="carousel-btn next" onclick="moveSlide('carousel-rooms', 1)">&#10095;</button>
+        <div class="carousel-counter"><span class="current">1</span> / <span class="total">4</span></div>
+      </div>
+    </div>
+
+  </section>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <h3>Moorthy Kalai Arangam</h3>
+        <p>16, Sarangapani Street, Valayapettai Agraharam, Kumbakonam - 612001, Tamil Nadu.</p>
+      </div>
+      <div>
+        <h4>Direct Contact</h4>
+        <p>Phone: +91 99999 99999</p>
+        <p>Email: contact@moorthykalaiarangam.com</p>
+      </div>
+      <div>
+        <h4>Quick Booking</h4>
+        <p><a href="contact.html" style="color: var(--accent); text-decoration: underline;">Inquire for Hall or Room Availability &rarr;</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Moorthy Kalai Arangam. All Rights Reserved.
+    </div>
+  </footer>
+
+  <script>
+    function moveSlide(carouselId, direction) {
+      const carousel = document.getElementById(carouselId);
+      const slides = carousel.querySelectorAll('.carousel-slide');
+      const counterCurrent = carousel.querySelector('.carousel-counter .current');
+      
+      let currentIndex = 0;
+      slides.forEach((slide, idx) => {
+        if (slide.classList.contains('active')) {
+          currentIndex = idx;
+        }
+      });
+
+      slides[currentIndex].classList.remove('active');
+      let nextIndex = (currentIndex + direction + slides.length) % slides.length;
+      slides[nextIndex].classList.add('active');
+      
+      if (counterCurrent) {
+        counterCurrent.textContent = nextIndex + 1;
+      }
+    }
+  </script>
+
+</body>
+</html>

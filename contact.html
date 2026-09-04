@@ -74,41 +74,86 @@
   </footer>
 
   <script>
-    // URL param selector prefill (?type=mini, etc.)
-    const params = new URLSearchParams(window.location.search);
-    const type = params.get('type');
-    if(type === 'mini') document.getElementById('bookingType').value = 'Mini Hall';
-    if(type === 'rooms') document.getElementById('bookingType').value = 'Guest Rooms Only';
+    // 1. Prefill facility selection from URL parameter (e.g. contact.html?type=mini)
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const type = params.get('type');
+      const dropdown = document.getElementById('bookingType');
 
-    const HALL_PHONE = "919999999999"; // Replace with your verified WhatsApp business number
-    const HALL_EMAIL = "contact@moorthykalaiarangam.com"; // Replace with verified recipient email
+      if (type === 'wedding') dropdown.value = 'Wedding Hall (Main)';
+      if (type === 'mini') dropdown.value = 'Mini Hall';
+      if (type === 'rooms') dropdown.value = 'Rooms Only';
+    });
 
+    // 2. Contact Routing Endpoints
+    const HALL_PHONE = "916381752600";         // WhatsApp destination number
+    const EMAIL_MANDAPAM = "moorthykalaiarangam@gmail.com";   // Destination for Wedding & Mini Hall
+    const EMAIL_ROOMS = "muraliinn@gmail.com";       // Destination for Rooms Only
+
+    // 3. Form Message Compiler
     function compileMessage() {
-      const name = document.getElementById('custName').value;
-      const phone = document.getElementById('custPhone').value;
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
       const facility = document.getElementById('bookingType').value;
       const date = document.getElementById('eventDate').value;
-      const details = document.getElementById('eventDetails').value;
+      const details = document.getElementById('eventDetails').value.trim() || 'None provided';
 
-      return `New Booking Enquiry - Moorthy Kalai Arangam\n\nName: ${name}\nPhone: ${phone}\nFacility: ${facility}\nEvent Date: ${date}\nDetails: ${details}`;
+      return `New Booking Enquiry - Moorthy Kalai Arangam\n` +
+             `------------------------------------\n` +
+             `Name: ${name}\n` +
+             `Phone: ${phone}\n` +
+             `Facility: ${facility}\n` +
+             `Event Date: ${date}\n` +
+             `Details / Requests: ${details}`;
     }
 
-    function sendViaWhatsApp() {
-      const name = document.getElementById('custName').value;
-      const phone = document.getElementById('custPhone').value;
-      if (!name || !phone) {
-        alert("Please enter your name and phone number.");
-        return;
+    // 4. Form Field Validation Helper
+    function validateInputs() {
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const date = document.getElementById('eventDate').value;
+
+      if (!name) {
+        alert("Please enter your full name.");
+        document.getElementById('custName').focus();
+        return false;
       }
-      const msg = encodeURIComponent(compileMessage());
-      window.open(`https://wa.me/${HALL_PHONE}?text=${msg}`, '_blank');
+      if (!phone) {
+        alert("Please enter your phone number.");
+        document.getElementById('custPhone').focus();
+        return false;
+      }
+      if (!date) {
+        alert("Please select an event date.");
+        document.getElementById('eventDate').focus();
+        return false;
+      }
+      return true;
     }
 
+    // 5. Send via WhatsApp
+    function sendViaWhatsApp() {
+      if (!validateInputs()) return;
+
+      const message = compileMessage();
+      const encodedMsg = encodeURIComponent(message);
+      const whatsappUrl = `https://wa.me/${HALL_PHONE}?text=${encodedMsg}`;
+      
+      window.open(whatsappUrl, '_blank');
+    }
+
+    // 6. Send via Email (Auto-routes based on chosen service)
     function sendViaEmail(e) {
       e.preventDefault();
-      const subject = encodeURIComponent("Booking Enquiry - Moorthy Kalai Arangam");
+      if (!validateInputs()) return;
+
+      const facility = document.getElementById('bookingType').value;
+      const targetEmail = (facility === "Guest Rooms Only") ? EMAIL_ROOMS : EMAIL_MANDAPAM;
+      
+      const subject = encodeURIComponent(`Booking Enquiry [${facility}] - Moorthy Kalai Arangam`);
       const body = encodeURIComponent(compileMessage());
-      window.location.href = `mailto:${HALL_EMAIL}?subject=${subject}&body=${body}`;
+      
+      window.location.href = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
     }
   </script>
 </body>
