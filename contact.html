@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book / Inquire | Moorthy Kalai Arangam</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap">
+</head>
+<body>
+
+  <header>
+    <div class="container nav-bar">
+      <div class="logo">MOORTHY <span>KALAI ARANGAM</span></div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="amenities.html">Facilities</a></li>
+        <li><a href="contact.html" class="active">Check Availability</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="section container">
+    <div class="section-title">
+      <h2>Check Date Availability & Booking</h2>
+      <p>Submit your event requirements to receive an instant callback or send directly via WhatsApp.</p>
+    </div>
+
+    <div class="form-container">
+      <form id="bookingForm" onsubmit="sendViaEmail(event)">
+        <div class="form-group">
+          <label for="custName">Full Name *</label>
+          <input type="text" id="custName" required placeholder="e.g. S. Ramanathan">
+        </div>
+
+        <div class="form-group">
+          <label for="custPhone">Phone Number *</label>
+          <input type="tel" id="custPhone" required placeholder="+91 98765 43210">
+        </div>
+
+        <div class="form-group">
+          <label for="bookingType">Required Facility *</label>
+          <select id="bookingType" required>
+            <option value="Wedding Hall (Main)">Wedding Hall (Central AC, 1200 Capacity)</option>
+            <option value="Mini Hall">Mini Hall</option>
+            <option value="Guest Rooms Only">22 Guest Rooms Only</option>
+            <option value="All Facilities Combined">Combined (Halls + 22 Rooms)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="eventDate">Event Date *</label>
+          <input type="date" id="eventDate" required>
+        </div>
+
+        <div class="form-group">
+          <label for="eventDetails">Additional Requirements (Cooking/Guest Count)</label>
+          <textarea id="eventDetails" rows="4" placeholder="Let us know approximate guest count or specific arrangements..."></textarea>
+        </div>
+
+        <div class="form-buttons">
+          <button type="submit" class="btn btn-primary" style="flex: 1;">Send via Email</button>
+          <button type="button" onclick="sendViaWhatsApp()" class="btn btn-whatsapp" style="flex: 1;">Send via WhatsApp</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-bottom">
+      &copy; 2026 Moorthy Kalai Arangam, Kumbakonam.
+    </div>
+  </footer>
+
+  <script>
+    // URL param selector prefill (?type=mini, etc.)
+    const params = new URLSearchParams(window.location.search);
+    const type = params.get('type');
+    if(type === 'mini') document.getElementById('bookingType').value = 'Mini Hall';
+    if(type === 'rooms') document.getElementById('bookingType').value = 'Guest Rooms Only';
+
+    const HALL_PHONE = "919999999999"; // Replace with your verified WhatsApp business number
+    const HALL_EMAIL = "contact@moorthykalaiarangam.com"; // Replace with verified recipient email
+
+    function compileMessage() {
+      const name = document.getElementById('custName').value;
+      const phone = document.getElementById('custPhone').value;
+      const facility = document.getElementById('bookingType').value;
+      const date = document.getElementById('eventDate').value;
+      const details = document.getElementById('eventDetails').value;
+
+      return `New Booking Enquiry - Moorthy Kalai Arangam\n\nName: ${name}\nPhone: ${phone}\nFacility: ${facility}\nEvent Date: ${date}\nDetails: ${details}`;
+    }
+
+    function sendViaWhatsApp() {
+      const name = document.getElementById('custName').value;
+      const phone = document.getElementById('custPhone').value;
+      if (!name || !phone) {
+        alert("Please enter your name and phone number.");
+        return;
+      }
+      const msg = encodeURIComponent(compileMessage());
+      window.open(`https://wa.me/${HALL_PHONE}?text=${msg}`, '_blank');
+    }
+
+    function sendViaEmail(e) {
+      e.preventDefault();
+      const subject = encodeURIComponent("Booking Enquiry - Moorthy Kalai Arangam");
+      const body = encodeURIComponent(compileMessage());
+      window.location.href = `mailto:${HALL_EMAIL}?subject=${subject}&body=${body}`;
+    }
+  </script>
+</body>
+</html>
