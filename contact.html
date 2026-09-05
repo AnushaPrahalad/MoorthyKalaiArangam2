@@ -29,7 +29,7 @@
     <div class="contact-page-header">
       <span class="detail-eyebrow">BOOKINGS & QUESTIONS</span>
       <h1>Enquire by WhatsApp, phone, or email</h1>
-      <p>Use the form and we will open WhatsApp and an email draft with your details.</p>
+      <p>Fill out the form below to send an enquiry directly to our management via WhatsApp and email.</p>
     </div>
 
     <!-- Main 2-Column Contact Container -->
@@ -37,30 +37,37 @@
       
       <!-- Left: Form Card -->
       <div class="contact-form-card">
-        <form id="enquiryForm" onsubmit="handleCombinedDispatch(event)">
+        <form id="enquiryForm" action="https://formsubmit.co/moorthikalaiarangam@gmail.com" method="POST" onsubmit="handleCombinedDispatch(event)">
+          
+          <!-- FormSubmit Configuration Hidden Fields -->
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" id="emailSubjectField" name="_subject" value="New Booking Enquiry">
+          <input type="hidden" id="emailCcField" name="_cc" value="muraliinn@gmail.com">
+
           <div class="form-group">
             <label for="name">Name *</label>
-            <input type="text" id="name" required placeholder="">
+            <input type="text" id="name" name="Name" required placeholder="Your full name">
           </div>
 
           <div class="form-group">
             <label for="phone">Phone *</label>
-            <input type="tel" id="phone" required placeholder="">
+            <input type="tel" id="phone" name="Phone" required placeholder="10-digit mobile number">
           </div>
 
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" id="email" placeholder="">
+            <input type="email" id="email" name="Email" placeholder="Your email address (optional)">
           </div>
 
           <div class="form-group">
             <label for="address">Address *</label>
-            <input type="text" id="address" required placeholder="City / Street address">
+            <input type="text" id="address" name="Address" required placeholder="City / Street address">
           </div>
 
           <div class="form-group">
             <label for="bookingChoice">I want to book *</label>
-            <select id="bookingChoice" required onchange="toggleRoomOptions()">
+            <select id="bookingChoice" name="Selected Facility" required onchange="toggleRoomOptions()">
               <option value="" disabled selected>Select</option>
               <option value="Wedding Hall">Wedding Hall</option>
               <option value="Mini Hall">Mini Hall</option>
@@ -68,14 +75,14 @@
             </select>
           </div>
 
-          <!-- Dynamic Room Type Checkboxes (Only shown when 'Rooms in Murali Inn' is chosen) -->
+          <!-- Dynamic Room Type Checkboxes -->
           <div class="form-group room-types-box" id="roomOptionsBlock" style="display: none;">
             <label style="margin-bottom: 8px;">Select Room Type(s) Required:</label>
             <div class="checkbox-grid">
-              <label class="check-item"><input type="checkbox" name="roomType" value="10 Bed Room"> 10 Bed</label>
-              <label class="check-item"><input type="checkbox" name="roomType" value="8 Bed Room"> 8 Bed</label>
-              <label class="check-item"><input type="checkbox" name="roomType" value="6 Bed Room"> 6 Bed</label>
-              <label class="check-item"><input type="checkbox" name="roomType" value="3 Bed Room"> 3 Bed</label>
+              <label class="check-item"><input type="checkbox" name="Room Types" value="10 Bed Room"> 10 Bed</label>
+              <label class="check-item"><input type="checkbox" name="Room Types" value="8 Bed Room"> 8 Bed</label>
+              <label class="check-item"><input type="checkbox" name="Room Types" value="6 Bed Room"> 6 Bed</label>
+              <label class="check-item"><input type="checkbox" name="Room Types" value="3 Bed Room"> 3 Bed</label>
             </div>
           </div>
 
@@ -83,21 +90,21 @@
           <div class="date-row-group">
             <div class="form-group">
               <label for="fromDate">From date *</label>
-              <input type="date" id="fromDate" required>
+              <input type="date" id="fromDate" name="From Date" required>
             </div>
             <div class="form-group">
               <label for="toDate">To date *</label>
-              <input type="date" id="toDate" required>
+              <input type="date" id="toDate" name="To Date" required>
             </div>
           </div>
 
           <div class="form-group">
             <label for="message">Message</label>
-            <textarea id="message" rows="4" placeholder="Guest count, special arrangements, or queries"></textarea>
+            <textarea id="message" name="Message" rows="4" placeholder="Guest count, special arrangements, or queries"></textarea>
           </div>
 
-          <button type="submit" class="btn btn-dark-full">Send via WhatsApp & email</button>
-          <p class="form-disclaimer">Your device will open WhatsApp and your mail app. No account is required on this site.</p>
+          <button type="submit" id="submitBtn" class="btn btn-dark-full">Send via WhatsApp & Email</button>
+          <p class="form-disclaimer">Your browser will send the email in the background and open WhatsApp with your enquiry details.</p>
         </form>
       </div>
 
@@ -172,6 +179,11 @@
   </footer>
 
   <script>
+    const WHATSAPP_NUMBER = "916381752600";
+    // const EMAIL_HALLS = "moorthikalaiarangam@gmail.com";
+    // const EMAIL_ROOMS = "muraliinn@gmail.com";
+const EMAIL_ROOMS ="anusha_venkataraman@yahoo.com";
+const EMAIL_HALLS = "anusha_venkataraman@yahoo.com";
     // Show/hide room options based on dropdown choice
     function toggleRoomOptions() {
       const choice = document.getElementById('bookingChoice').value;
@@ -180,21 +192,18 @@
         roomBlock.style.display = 'block';
       } else {
         roomBlock.style.display = 'none';
-        // uncheck boxes if hidden
-        document.querySelectorAll('input[name="roomType"]').forEach(cb => cb.checked = false);
+        document.querySelectorAll('input[name="Room Types"]').forEach(cb => cb.checked = false);
       }
     }
 
     // Prefill dropdown and set date picker rules on load
     window.addEventListener('DOMContentLoaded', () => {
-      // 1. Set minimum date to today (prevents booking past dates)
       const today = new Date().toISOString().split('T')[0];
       const fromInput = document.getElementById('fromDate');
       const toInput = document.getElementById('toDate');
 
       fromInput.min = today;
 
-      // When fromDate changes, restrict toDate to be at least that day
       fromInput.addEventListener('change', () => {
         if (fromInput.value) {
           toInput.min = fromInput.value;
@@ -204,7 +213,6 @@
         }
       });
 
-      // 2. Prefill dropdown from URL parameters
       const params = new URLSearchParams(window.location.search);
       const type = params.get('type');
       const select = document.getElementById('bookingChoice');
@@ -214,12 +222,6 @@
       toggleRoomOptions();
     });
 
-    const WHATSAPP_NUMBER = "916381752600";
-    const WHATSAPP_NUMBER1 = "91960005916";
-    const EMAIL_MANDAPAM = "moorthikalaiarangam@gmail.com";
-    // const EMAIL_ROOMS = "muraliinn@gmail.com";
-
-const EMAIL_ROOMS ="anusha_venkataraman@yahoo.com"
     function handleCombinedDispatch(e) {
       e.preventDefault();
 
@@ -232,7 +234,7 @@ const EMAIL_ROOMS ="anusha_venkataraman@yahoo.com"
       const toDate = document.getElementById('toDate').value;
       const message = document.getElementById('message').value.trim() || 'No additional notes';
 
-      // --- DATE CHECKING VALIDATION ---
+      // Date validation
       if (!fromDate || !toDate) {
         alert("Please select both 'From date' and 'To date'.");
         return;
@@ -247,14 +249,21 @@ const EMAIL_ROOMS ="anusha_venkataraman@yahoo.com"
       // Gather room types if Murali Inn is chosen
       let selectedRooms = [];
       if (choice === 'Rooms in Murali Inn') {
-        document.querySelectorAll('input[name="roomType"]:checked').forEach(cb => {
+        document.querySelectorAll('input[name="Room Types"]:checked').forEach(cb => {
           selectedRooms.push(cb.value);
         });
       }
       const roomStr = selectedRooms.length > 0 ? selectedRooms.join(', ') : 'Not specified';
 
-      // Determine target recipient email
-      const targetEmail = (choice === "Rooms in Murali Inn") ? EMAIL_ROOMS : EMAIL_MANDAPAM;
+      // Dynamic recipient routing
+      const isRoomsOnly = (choice === 'Rooms in Murali Inn');
+      const targetEmail = isRoomsOnly ? EMAIL_ROOMS : EMAIL_HALLS;
+      const secondaryEmail = isRoomsOnly ? EMAIL_HALLS : EMAIL_ROOMS;
+
+      const formElement = document.getElementById('enquiryForm');
+      formElement.action = `https://formsubmit.co/${targetEmail}`;
+      document.getElementById('emailCcField').value = secondaryEmail;
+      document.getElementById('emailSubjectField').value = `Booking Enquiry: ${choice} - ${name}`;
 
       // Format WhatsApp Message
       let waText = `*New Booking Enquiry - Moorthy Kalai Arangam*\n\n` +
@@ -271,32 +280,34 @@ const EMAIL_ROOMS ="anusha_venkataraman@yahoo.com"
       waText += `*Dates:* ${fromDate} to ${toDate}\n` +
                 `*Message:* ${message}`;
 
-      // Format Email Content
-      const emailSubject = encodeURIComponent(`Booking Enquiry: ${choice} - ${name}`);
-      let emailBodyText = `Name: ${name}\n` +
-                          `Phone: ${phone}\n` +
-                          `Customer Email: ${custEmail}\n` +
-                          `Address: ${address}\n` +
-                          `Selected Facility: ${choice}\n`;
-
-      if (choice === 'Rooms in Murali Inn') {
-        emailBodyText += `Requested Room Types: ${roomStr}\n`;
-      }
-
-      emailBodyText += `From Date: ${fromDate}\n` +
-                       `To Date: ${toDate}\n\n` +
-                       `Message / Requirements:\n${message}`;
-
-      const emailBody = encodeURIComponent(emailBodyText);
-
-      // Trigger WhatsApp
+      // Open WhatsApp
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waText)}`, '_blank');
-      window.open(`https://wa.me/${WHATSAPP_NUMBER1}?text=${encodeURIComponent(waText)}`, '_blank');
-      
-      // Trigger default mail draft
-      setTimeout(() => {
-        window.location.href = `mailto:${targetEmail}?subject=${emailSubject}&body=${emailBody}`;
-      }, 400);
+
+      // Send Email in Background via FormSubmit
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.textContent = 'Submitting...';
+      submitBtn.disabled = true;
+
+      fetch(formElement.action, {
+        method: "POST",
+        body: new FormData(formElement),
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => {
+        submitBtn.textContent = 'Enquiry Sent Successfully';
+        formElement.reset();
+        toggleRoomOptions();
+        setTimeout(() => {
+          submitBtn.textContent = 'Send via WhatsApp & Email';
+          submitBtn.disabled = false;
+        }, 4000);
+      })
+      .catch(error => {
+        submitBtn.textContent = 'Send via WhatsApp & Email';
+        submitBtn.disabled = false;
+      });
     }
   </script>
 </body>
