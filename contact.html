@@ -185,8 +185,26 @@
       }
     }
 
-    // Prefill dropdown if visiting from another page (?type=rooms, etc.)
+    // Prefill dropdown and set date picker rules on load
     window.addEventListener('DOMContentLoaded', () => {
+      // 1. Set minimum date to today (prevents booking past dates)
+      const today = new Date().toISOString().split('T')[0];
+      const fromInput = document.getElementById('fromDate');
+      const toInput = document.getElementById('toDate');
+
+      fromInput.min = today;
+
+      // When fromDate changes, restrict toDate to be at least that day
+      fromInput.addEventListener('change', () => {
+        if (fromInput.value) {
+          toInput.min = fromInput.value;
+          if (toInput.value && toInput.value < fromInput.value) {
+            toInput.value = fromInput.value;
+          }
+        }
+      });
+
+      // 2. Prefill dropdown from URL parameters
       const params = new URLSearchParams(window.location.search);
       const type = params.get('type');
       const select = document.getElementById('bookingChoice');
@@ -197,9 +215,11 @@
     });
 
     const WHATSAPP_NUMBER = "916381752600";
+    const WHATSAPP_NUMBER1 = "91960005916";
     const EMAIL_MANDAPAM = "moorthikalaiarangam@gmail.com";
-    const EMAIL_ROOMS = "muraliinn@gmail.com";
+    // const EMAIL_ROOMS = "muraliinn@gmail.com";
 
+const EMAIL_ROOMS ="anusha_venkataraman@yahoo.com"
     function handleCombinedDispatch(e) {
       e.preventDefault();
 
@@ -211,6 +231,18 @@
       const fromDate = document.getElementById('fromDate').value;
       const toDate = document.getElementById('toDate').value;
       const message = document.getElementById('message').value.trim() || 'No additional notes';
+
+      // --- DATE CHECKING VALIDATION ---
+      if (!fromDate || !toDate) {
+        alert("Please select both 'From date' and 'To date'.");
+        return;
+      }
+
+      if (toDate < fromDate) {
+        alert("Invalid Date: 'To date' cannot be earlier than 'From date'.");
+        document.getElementById('toDate').focus();
+        return;
+      }
 
       // Gather room types if Murali Inn is chosen
       let selectedRooms = [];
@@ -259,7 +291,8 @@
 
       // Trigger WhatsApp
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waText)}`, '_blank');
-
+      window.open(`https://wa.me/${WHATSAPP_NUMBER1}?text=${encodeURIComponent(waText)}`, '_blank');
+      
       // Trigger default mail draft
       setTimeout(() => {
         window.location.href = `mailto:${targetEmail}?subject=${emailSubject}&body=${emailBody}`;

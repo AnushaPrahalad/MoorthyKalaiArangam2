@@ -16,7 +16,6 @@
   --radius: 12px;
 }
 
-/* Base Reset */
 * {
   margin: 0;
   padding: 0;
@@ -30,7 +29,6 @@ body {
   line-height: 1.6;
 }
 
-/* Typography */
 h1, h2, h3, h4 {
   font-family: var(--font-heading);
   color: var(--primary);
@@ -50,7 +48,7 @@ a {
   padding: 0 15px;
 }
 
-/* Header & Navigation */
+/* Header & Nav */
 header {
   background-color: #ffffff;
   border-bottom: 2px solid var(--border);
@@ -163,18 +161,7 @@ header {
   background-color: #1ebc59;
 }
 
-.btn-outline {
-  background: transparent;
-  color: var(--primary);
-  border: 1.5px solid var(--primary);
-}
-
-.btn-outline:hover {
-  background: var(--primary);
-  color: #ffffff;
-}
-
-/* General Layout Elements */
+/* Layout Blocks */
 .section {
   padding: 50px 0;
 }
@@ -197,6 +184,66 @@ header {
   height: 3px;
   background-color: var(--accent);
   margin: 10px auto 0;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+.card-content {
+  padding: 24px;
+}
+
+.card-content h3 {
+  margin-bottom: 12px;
+}
+
+.image-placeholder {
+  width: 100%;
+  height: 220px;
+  background-color: #e5ded5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7d7168;
+  font-weight: bold;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  padding: 15px;
+}
+
+/* Badges */
+/* .badge-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+} */
+.badge-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+  margin-bottom: 0px; /* Removes extra bottom margin */
+}
+
+.badge {
+  background: #f4ede4;
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  border-radius: 4px;
+  font-weight: 500;
 }
 
 /* Stat Grid (Home) */
@@ -222,113 +269,26 @@ header {
   color: var(--text-muted);
 }
 
-/* ==========================================================
-   ABOUT CARD SECTION (SIDE-BY-SIDE GRID LOCK)
-   ========================================================== */
+/* About Section Box */
 .about-card {
-  display: grid;
-  grid-template-columns: 1fr 1.15fr; /* Fixes left-right placement */
-  gap: 36px;
-  align-items: start;
+  display: flex;
+  align-items: flex-start;
   background: #ffffff;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 32px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-}
-
-.about-card .about-left-col {
-  display: flex;
-  flex-direction: column;
+  overflow: hidden;
+  padding: 28px;
+  gap: 32px;
 }
 
 .about-card .about-img {
-  width: 100%;
-  height: 380px;
+  min-height: 360px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
 }
 
-.about-card .about-text {
-  padding: 0;
-}
-
 /* ==========================================================
-   EVENT SPACE CARDS (HOME PAGE)
-   ========================================================== */
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 30px;
-  align-items: start;
-}
-
-.card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-  display: flex;
-  flex-direction: column;
-}
-
-.image-placeholder {
-  width: 100%;
-  height: 220px;
-  background-color: #e5ded5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #7d7168;
-  font-weight: bold;
-  border-bottom: 1px solid var(--border);
-  text-align: center;
-  padding: 15px;
-}
-
-.card-content {
-  padding: 24px;
-}
-
-.card-content h3 {
-  margin-bottom: 12px;
-}
-
-/* Compact Badges & Actions (Eliminating the Big Gap) */
-.badge-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 16px;
-  margin-bottom: 0px;
-}
-
-.badge {
-  background: #f4ede4;
-  border: 1px solid var(--border);
-  padding: 6px 12px;
-  font-size: 0.85rem;
-  border-radius: 4px;
-  font-weight: 500;
-}
-
-.card-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 16px;
-  padding-top: 0;
-}
-
-.card-actions .btn {
-  flex: 1;
-  padding: 10px 14px;
-  font-size: 0.9rem;
-  white-space: nowrap;
-}
-
-/* ==========================================================
-   HALL DETAIL PAGES (WEDDING HALL & MINI HALL)
+   DETAIL PAGE DESIGN (IMAGE MOCKUP SPEC)
    ========================================================== */
 .detail-header {
   margin-bottom: 30px;
@@ -433,7 +393,7 @@ header {
   right: 18px;
 }
 
-/* Metric 4-Box Row */
+/* Metrics 4-Box Row */
 .metric-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -461,7 +421,7 @@ header {
   font-size: 0.9rem;
 }
 
-/* 2-Column Specs Layout */
+/* 2-Column Split Specifications */
 .spec-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -510,8 +470,137 @@ header {
   top: 7px;
 }
 
+/* Form Styling */
+.form-container {
+  max-width: 680px;
+  margin: 0 auto;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 35px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 7px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cccccc;
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+/* Footer */
+footer {
+  background-color: var(--primary-dark);
+  color: #eedccb;
+  padding: 45px 0 20px;
+  margin-top: 60px;
+}
+
+footer h3,
+footer h4 {
+  color: var(--accent);
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.footer-bottom {
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 20px;
+  font-size: 0.85rem;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .metric-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .spec-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-bar {
+    flex-direction: column;
+    gap: 14px;
+    text-align: center;
+  }
+
+  .nav-links {
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .cta-group {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-group .btn {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .about-card {
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .about-card .about-img {
+    min-height: 240px;
+    width: 100%;
+  }
+
+  .carousel-banner {
+    height: 260px;
+  }
+
+  .form-container {
+    padding: 20px;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+  }
+}
+
 /* ==========================================================
-   CONTACT PAGE STYLES
+   CONTACT PAGE RE-DESIGN (MATCHING LAYOUT MOCKUP)
    ========================================================== */
 .contact-page-header {
   margin-bottom: 35px;
@@ -535,6 +624,7 @@ header {
   align-items: flex-start;
 }
 
+/* Left Form Container */
 .contact-form-card {
   background: #ffffff;
   border: 1px solid var(--border);
@@ -575,42 +665,6 @@ header {
   box-shadow: 0 0 0 2px rgba(107, 23, 36, 0.1);
 }
 
-.date-row-group {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-}
-
-.room-types-box {
-  background: #fbf8f3;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 14px;
-}
-
-.checkbox-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-  gap: 10px;
-  margin-top: 5px;
-}
-
-.check-item {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.check-item input[type="checkbox"] {
-  width: auto;
-  margin: 0;
-  accent-color: var(--primary);
-  cursor: pointer;
-}
-
 .btn-dark-full {
   width: 100%;
   background-color: var(--primary);
@@ -635,7 +689,7 @@ header {
   line-height: 1.4;
 }
 
-/* "Talk to us" Sidebar */
+/* Right "Talk to us" Maroon Card */
 .talk-to-us-card {
   background-color: var(--primary-dark);
   color: #eedccb;
@@ -684,6 +738,7 @@ header {
   line-height: 1.5;
 }
 
+/* Map Embed Container */
 .map-embed-box {
   width: 100%;
   border-radius: 10px;
@@ -693,182 +748,104 @@ header {
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-/* ==========================================================
-   FOOTER
-   ========================================================== */
-footer {
-  background-color: var(--primary-dark);
-  color: #eedccb;
-  padding: 45px 0 20px;
-  margin-top: 60px;
-}
-
-footer h3,
-footer h4 {
-  color: var(--accent);
-  margin-bottom: 12px;
-  letter-spacing: 1px;
-}
-
-.footer-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  margin-bottom: 30px;
-}
-
-.footer-bottom {
-  text-align: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 20px;
-  font-size: 0.85rem;
-}
-
-/* ==========================================================
-   RESPONSIVENESS (MOBILE BREAKPOINTS)
-   ========================================================== */
-@media (max-width: 900px) {
-  .metric-row {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .spec-row {
-    grid-template-columns: 1fr;
-  }
+/* Responsive */
+@media (max-width: 860px) {
   .contact-split-wrapper {
     grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 768px) {
-  .nav-bar {
-    flex-direction: column;
-    gap: 14px;
-    text-align: center;
-  }
+/* Date Range Grid */
+.date-row-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
 
-  .nav-links {
-    gap: 14px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+/* Room Selection Checkbox Box */
+.room-types-box {
+  background: #fbf8f3;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+}
 
-  .hero h1 {
-    font-size: 2rem;
-  }
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 10px;
+  margin-top: 5px;
+}
 
-  .cta-group {
-    flex-direction: column;
-    align-items: center;
-  }
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+}
 
-  .cta-group .btn {
-    width: 100%;
-    max-width: 280px;
-  }
+.check-item input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
 
-  .about-card {
-    grid-template-columns: 1fr;
-    padding: 20px;
-    gap: 20px;
-  }
-
-  .about-card .about-img {
-    height: 240px;
-  }
-
-  .carousel-banner {
-    height: 260px;
-  }
-
+@media (max-width: 480px) {
   .date-row-group {
     grid-template-columns: 1fr;
   }
 }
 
-/* ==========================================================
-   PERMANENT ABOUT SECTION FIX
-   ========================================================== */
-.about-grid-box {
-  display: grid !important;
-  grid-template-columns: 1fr 1.2fr !important;
-  gap: 36px !important;
-  align-items: start !important;
-  background: #ffffff !important;
-  border: 1px solid var(--border) !important;
-  border-radius: var(--radius) !important;
-  padding: 32px !important;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
+/* Card Bottom Actions: Side-by-Side */
+/* .card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  align-items: stretch;
+} */
+
+.card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px; /* Pulls the buttons tight under the badges */
+  padding-top: 0;
 }
 
-.about-col-left {
-  display: flex !important;
-  flex-direction: column !important;
+.card-actions .btn {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  white-space: nowrap;
 }
 
-.about-eyebrow {
-  color: var(--accent) !important;
-  font-weight: 700 !important;
-  text-transform: uppercase !important;
-  font-size: 0.85rem !important;
-  letter-spacing: 1.5px !important;
-  text-align: center !important;
-  display: block !important;
-  margin-bottom: 16px !important;
+/* Secondary Outlined Button Style */
+.btn-outline {
+  background: transparent;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
 }
 
-.about-image-frame {
-  width: 100% !important;
-  height: 380px !important;
-  background-color: #e5ded5 !important;
-  border: 1px solid var(--border) !important;
-  border-radius: var(--radius) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  color: #7d7168 !important;
-  font-weight: bold !important;
-  text-align: center !important;
-  padding: 20px !important;
+.btn-outline:hover {
+  background: var(--primary);
+  color: #ffffff;
 }
 
-.about-col-right {
-  padding: 0 !important;
+/* Ensure card content aligns buttons evenly at the bottom */
+.card {
+  display: flex;
+  flex-direction: column;
 }
 
-.about-col-right h2 {
-  font-size: 2.2rem !important;
-  margin-bottom: 20px !important;
+.card-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
-.about-col-right p {
-  color: var(--text-muted) !important;
-  margin-bottom: 16px !important;
-  line-height: 1.7 !important;
-}
-
-/* Collapse to single column only on phones */
-@media (max-width: 768px) {
-  .about-grid-box {
-    grid-template-columns: 1fr !important;
-    padding: 20px !important;
-    gap: 24px !important;
-  }
-
-  .about-image-frame {
-    height: 240px !important;
-  }
-}
-
-/* 4-Section Facilities Grid */
-.spec-row-4col {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-  margin-bottom: 40px;
-}
-
-@media (max-width: 768px) {
-  .spec-row-4col {
-    grid-template-columns: 1fr;
-  }
+.card-actions {
+  margin-top: auto; /* Pushes the button pair to the very bottom edge */
+  padding-top: 15px;
 }
