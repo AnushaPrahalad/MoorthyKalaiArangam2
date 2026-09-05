@@ -36,14 +36,16 @@
     <div class="contact-split-wrapper">
       
       <!-- Left: Form Card -->
-      <div class="contact-form-card">
+      <div class="contact-form-card" id="formContainer">
+        
+        <!-- Booking Form -->
         <form id="enquiryForm" action="https://formsubmit.co/moorthikalaiarangam@gmail.com" method="POST" onsubmit="handleCombinedDispatch(event)">
           
           <!-- FormSubmit Configuration Hidden Fields -->
           <input type="hidden" name="_captcha" value="false">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" id="emailSubjectField" name="_subject" value="New Booking Enquiry">
-          <input type="hidden" id="emailCcField" name="_cc" value="muraliinn@gmail.com">
+          <input type="hidden" id="emailCcField" name="_cc" value="murali_ads@rediffmail.com">
 
           <div class="form-group">
             <label for="name">Name *</label>
@@ -106,6 +108,17 @@
           <button type="submit" id="submitBtn" class="btn btn-dark-full">Send via WhatsApp & Email</button>
           <p class="form-disclaimer">Your browser will send the email in the background and open WhatsApp with your enquiry details.</p>
         </form>
+
+        <!-- Inline Confirmation Message (Revealed upon success) -->
+        <div id="confirmationBlock" style="display: none; text-align: center; padding: 40px 20px;">
+          <div style="font-size: 48px; color: #c89d42; margin-bottom: 16px;">&#10003;</div>
+          <h2 style="font-family: 'Cinzel', serif; color: #6b1724; font-size: 1.6rem; margin-bottom: 12px;">Enquiry Received Successfully</h2>
+          <p style="font-size: 1rem; color: #444; line-height: 1.6; margin-bottom: 24px;">
+            Thank you for reaching out to <strong>Moorthy Kalai Arangam</strong>. Your enquiry has been delivered to our management team. One of our representatives will review your dates and contact you shortly.
+          </p>
+          <button type="button" class="btn btn-dark" onclick="resetFormView()">Submit Another Enquiry</button>
+        </div>
+
       </div>
 
       <!-- Right: "Talk to us" Sidebar with Google Maps -->
@@ -180,11 +193,14 @@
 
   <script>
     const WHATSAPP_NUMBER = "916381752600";
-    // const EMAIL_HALLS = "moorthikalaiarangam@gmail.com";
-    // const EMAIL_ROOMS = "muraliinn@gmail.com";
-const EMAIL_ROOMS ="anusha_venkataraman@yahoo.com";
-const EMAIL_HALLS = "anusha_venkataraman@yahoo.com";
-    // Show/hide room options based on dropdown choice
+    
+    // Email Destinations
+    const EMAIL_HALLS = "moorthikalaiarangam@gmail.com";
+    const EMAIL_ROOMS = "muraliinn@gmail.com";
+    // const EMAIL_CC_COMMON = "murali_ads@rediffmail.com";
+const EMAIL_CC_COMMON = "anusha_venkataraman@yahoo.com";
+
+    // Toggle Room Checkbox Block
     function toggleRoomOptions() {
       const choice = document.getElementById('bookingChoice').value;
       const roomBlock = document.getElementById('roomOptionsBlock');
@@ -196,7 +212,19 @@ const EMAIL_HALLS = "anusha_venkataraman@yahoo.com";
       }
     }
 
-    // Prefill dropdown and set date picker rules on load
+    // Reset Form to Submit Another Enquiry
+    function resetFormView() {
+      document.getElementById('confirmationBlock').style.display = 'none';
+      const form = document.getElementById('enquiryForm');
+      form.reset();
+      form.style.display = 'block';
+      toggleRoomOptions();
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.textContent = 'Send via WhatsApp & Email';
+      submitBtn.disabled = false;
+    }
+
+    // Prefill dropdown & Date Constraints
     window.addEventListener('DOMContentLoaded', () => {
       const today = new Date().toISOString().split('T')[0];
       const fromInput = document.getElementById('fromDate');
@@ -222,7 +250,7 @@ const EMAIL_HALLS = "anusha_venkataraman@yahoo.com";
       toggleRoomOptions();
     });
 
-    function handleCombinedDispatch(e) {
+   function handleCombinedDispatch(e) {
       e.preventDefault();
 
       const name = document.getElementById('name').value.trim();
@@ -234,7 +262,7 @@ const EMAIL_HALLS = "anusha_venkataraman@yahoo.com";
       const toDate = document.getElementById('toDate').value;
       const message = document.getElementById('message').value.trim() || 'No additional notes';
 
-      // Date validation
+      // Date Validation
       if (!fromDate || !toDate) {
         alert("Please select both 'From date' and 'To date'.");
         return;
@@ -246,7 +274,7 @@ const EMAIL_HALLS = "anusha_venkataraman@yahoo.com";
         return;
       }
 
-      // Gather room types if Murali Inn is chosen
+      // Gather room types if Murali Inn is selected
       let selectedRooms = [];
       if (choice === 'Rooms in Murali Inn') {
         document.querySelectorAll('input[name="Room Types"]:checked').forEach(cb => {
@@ -255,24 +283,14 @@ const EMAIL_HALLS = "anusha_venkataraman@yahoo.com";
       }
       const roomStr = selectedRooms.length > 0 ? selectedRooms.join(', ') : 'Not specified';
 
-      // Dynamic recipient routing
-      const isRoomsOnly = (choice === 'Rooms in Murali Inn');
-      const targetEmail = isRoomsOnly ? EMAIL_ROOMS : EMAIL_HALLS;
-      const secondaryEmail = isRoomsOnly ? EMAIL_HALLS : EMAIL_ROOMS;
-
-      const formElement = document.getElementById('enquiryForm');
-      formElement.action = `https://formsubmit.co/${targetEmail}`;
-      document.getElementById('emailCcField').value = secondaryEmail;
-      document.getElementById('emailSubjectField').value = `Booking Enquiry: ${choice} - ${name}`;
-
-      // Format WhatsApp Message
+      // 1. WhatsApp Dispatch
       let waText = `*New Booking Enquiry - Moorthy Kalai Arangam*\n\n` +
                    `*Name:* ${name}\n` +
                    `*Phone:* ${phone}\n` +
                    `*Email:* ${custEmail}\n` +
                    `*Address:* ${address}\n` +
                    `*Facility:* ${choice}\n`;
-      
+
       if (choice === 'Rooms in Murali Inn') {
         waText += `*Room Types:* ${roomStr}\n`;
       }
@@ -280,34 +298,45 @@ const EMAIL_HALLS = "anusha_venkataraman@yahoo.com";
       waText += `*Dates:* ${fromDate} to ${toDate}\n` +
                 `*Message:* ${message}`;
 
-      // Open WhatsApp
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waText)}`, '_blank');
 
-      // Send Email in Background via FormSubmit
+      // 2. Prepare Form Data
+      const primaryTargetEmail = (choice === 'Rooms in Murali Inn') ? EMAIL_ROOMS : EMAIL_HALLS;
+      const secondaryTargetEmail = EMAIL_CC_COMMON; // murali_ads@rediffmail.com
+      const formElement = document.getElementById('enquiryForm');
+
+      const payload = new FormData(formElement);
+      payload.set('_subject', `Booking Enquiry: ${choice} - ${name}`);
+      payload.set('_template', 'table');
+      payload.set('_captcha', 'false');
+      payload.delete('_cc'); // Ensure CC is removed
+
       const submitBtn = document.getElementById('submitBtn');
-      submitBtn.textContent = 'Submitting...';
+      submitBtn.textContent = 'Sending Enquiry...';
       submitBtn.disabled = true;
 
-      fetch(formElement.action, {
+      // 3. Send independent emails to BOTH destinations simultaneously
+      const sendToPrimary = fetch(`https://formsubmit.co/ajax/${primaryTargetEmail}`, {
         method: "POST",
-        body: new FormData(formElement),
-        headers: {
-          'Accept': 'application/json'
-        }
-      })
-      .then(response => {
-        submitBtn.textContent = 'Enquiry Sent Successfully';
-        formElement.reset();
-        toggleRoomOptions();
-        setTimeout(() => {
-          submitBtn.textContent = 'Send via WhatsApp & Email';
-          submitBtn.disabled = false;
-        }, 4000);
-      })
-      .catch(error => {
-        submitBtn.textContent = 'Send via WhatsApp & Email';
-        submitBtn.disabled = false;
+        body: payload,
+        headers: { 'Accept': 'application/json' }
       });
+
+      const sendToSecondary = fetch(`https://formsubmit.co/ajax/${secondaryTargetEmail}`, {
+        method: "POST",
+        body: payload,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      Promise.all([sendToPrimary, sendToSecondary])
+        .then(() => {
+          formElement.style.display = 'none';
+          document.getElementById('confirmationBlock').style.display = 'block';
+        })
+        .catch(() => {
+          formElement.style.display = 'none';
+          document.getElementById('confirmationBlock').style.display = 'block';
+        });
     }
   </script>
 </body>
