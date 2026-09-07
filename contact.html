@@ -45,7 +45,6 @@
           <input type="hidden" name="_captcha" value="false">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" id="emailSubjectField" name="_subject" value="New Booking Enquiry">
-          <input type="hidden" id="emailCcField" name="_cc" value="murali_ads@rediffmail.com">
 
           <div class="form-group">
             <label for="name">Name *</label>
@@ -77,7 +76,7 @@
             </select>
           </div>
 
-          <!-- Dynamic Room Type Checkboxes -->
+          <!-- Dynamic Room Type Checkboxes (Includes 2 Bed) -->
           <div class="form-group room-types-box" id="roomOptionsBlock" style="display: none;">
             <label style="margin-bottom: 8px;">Select Room Type(s) Required:</label>
             <div class="checkbox-grid">
@@ -85,6 +84,7 @@
               <label class="check-item"><input type="checkbox" name="Room Types" value="8 Bed Room"> 8 Bed</label>
               <label class="check-item"><input type="checkbox" name="Room Types" value="6 Bed Room"> 6 Bed</label>
               <label class="check-item"><input type="checkbox" name="Room Types" value="3 Bed Room"> 3 Bed</label>
+              <label class="check-item"><input type="checkbox" name="Room Types" value="2 Bed Room"> 2 Bed</label>
             </div>
           </div>
 
@@ -142,7 +142,7 @@
 
         <div class="talk-block">
           <span class="talk-label">Rooms Only Email</span>
-          <a href="mailto:muraliinn@gmail.com" class="talk-val link-gold">muraliinn@gmail.com</a>
+          <a href="mailto:muraliinn1@gmail.com" class="talk-val link-gold">muraliinn1@gmail.com</a>
         </div>
 
         <div class="talk-block" style="border-bottom: none; margin-bottom: 15px;">
@@ -167,7 +167,7 @@
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- Standardized Footer -->
   <footer>
     <div class="container footer-grid">
       <div>
@@ -176,14 +176,22 @@
       </div>
       <div>
         <h4>Direct Contact</h4>
-        <p style="margin-bottom: 6px;"><strong>Phone:</strong> <a href="tel:+916381752600" style="color: inherit;">+91 63817 52600</a></p>
-        <p style="margin-bottom: 6px;"><strong>WhatsApp:</strong> <a href="https://wa.me/916381752600" target="_blank" style="color: inherit;">+91 63817 52600</a></p>
-        <p style="margin-bottom: 6px;"><strong>Halls:</strong> <a href="mailto:moorthykalaiarangam@gmail.com" style="color: inherit;">moorthykalaiarangam@gmail.com</a></p>
-        <p style="margin-bottom: 6px;"><strong>Rooms Only:</strong> <a href="mailto:muraliinn1@gmail.com" style="color: inherit;">muraliinn1@gmail.com</a></p>
+        <p style="margin-bottom: 6px;">
+          <strong>Phone:</strong> <a href="tel:+916381752600" style="color: inherit;">+91 63817 52600</a>
+        </p>
+        <p style="margin-bottom: 6px;">
+          <strong>WhatsApp:</strong> <a href="https://wa.me/916381752600" target="_blank" style="color: inherit;">+91 63817 52600</a>
+        </p>
+        <p style="margin-bottom: 6px;">
+          <strong>Halls:</strong> <a href="mailto:moorthikalaiarangam@gmail.com" style="color: inherit;">moorthikalaiarangam@gmail.com</a>
+        </p>
+        <p style="margin-bottom: 6px;">
+          <strong>Murali Inn Rooms:</strong> <a href="mailto:muraliinn1@gmail.com" style="color: inherit;">muraliinn1@gmail.com</a>
+        </p>
       </div>
       <div>
         <h4>Highlights</h4>
-        <p>Wheelchair Accessible • Full Generator Backup • Multi-Level CCTV Monitoring</p>
+        <p>Wheelchair Accessible • Full Generator Backup • Multi-Level CCTV Monitoring • 24x7 Security</p>
       </div>
     </div>
     <div class="footer-bottom">
@@ -195,10 +203,9 @@
     const WHATSAPP_NUMBER = "916381752600";
     
     // Email Destinations
-    const EMAIL_HALLS = "moorthykalaiarangam@gmail.com";
+    const EMAIL_HALLS = "moorthikalaiarangam@gmail.com";
     const EMAIL_ROOMS = "muraliinn1@gmail.com";
-   const EMAIL_CC_COMMON = "murali_ads@rediffmail.com";
-
+    const EMAIL_CC_COMMON = "murali_ads@rediffmail.com";
 
     // Toggle Room Checkbox Block
     function toggleRoomOptions() {
@@ -250,7 +257,7 @@
       toggleRoomOptions();
     });
 
-   function handleCombinedDispatch(e) {
+    function handleCombinedDispatch(e) {
       e.preventDefault();
 
       const name = document.getElementById('name').value.trim();
@@ -274,16 +281,17 @@
         return;
       }
 
-      // Gather room types if Murali Inn is selected
+      // 1. Gather ALL checked room types
       let selectedRooms = [];
       if (choice === 'Rooms in Murali Inn') {
         document.querySelectorAll('input[name="Room Types"]:checked').forEach(cb => {
+          console.log(cb.value);
           selectedRooms.push(cb.value);
         });
       }
       const roomStr = selectedRooms.length > 0 ? selectedRooms.join(', ') : 'Not specified';
 
-      // 1. WhatsApp Dispatch
+      // 2. WhatsApp Dispatch
       let waText = `*New Booking Enquiry - Moorthy Kalai Arangam*\n\n` +
                    `*Name:* ${name}\n` +
                    `*Phone:* ${phone}\n` +
@@ -300,22 +308,29 @@
 
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waText)}`, '_blank');
 
-      // 2. Prepare Form Data
+      // 3. Prepare Form Data Payload
       const primaryTargetEmail = (choice === 'Rooms in Murali Inn') ? EMAIL_ROOMS : EMAIL_HALLS;
-      const secondaryTargetEmail = EMAIL_CC_COMMON; // murali_ads@rediffmail.com
+      const secondaryTargetEmail = EMAIL_CC_COMMON;
       const formElement = document.getElementById('enquiryForm');
 
       const payload = new FormData(formElement);
       payload.set('_subject', `Booking Enquiry: ${choice} - ${name}`);
       payload.set('_template', 'table');
       payload.set('_captcha', 'false');
-      payload.delete('_cc'); // Ensure CC is removed
+      payload.delete('_cc'); 
+
+      // Consolidate all checkboxes into a single unified key so all selections arrive in the email
+      if (choice === 'Rooms in Murali Inn') {
+        payload.set('Room Types', roomStr);
+      } else {
+        payload.delete('Room Types');
+      }
 
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.textContent = 'Sending Enquiry...';
       submitBtn.disabled = true;
 
-      // 3. Send independent emails to BOTH destinations simultaneously
+      // 4. Send concurrent dispatches
       const sendToPrimary = fetch(`https://formsubmit.co/ajax/${primaryTargetEmail}`, {
         method: "POST",
         body: payload,
